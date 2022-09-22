@@ -9,7 +9,14 @@ import { useStateContext } from '../contexts/ContextProvider.js';
 import { itemsToOrder } from '@syncfusion/ej2/treemap';
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize } = useStateContext();
+
+  const handleCloseSidebar = () => {
+    if (activeMenu && screenSize <= 900) {
+      setActiveMenu(false);
+    }
+  }
+
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2';
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray text-md m-2';
 
@@ -26,7 +33,7 @@ const Sidebar = () => {
           <TooltipComponent content="Menu" position="BottomCenter">
             <button
               type='button'
-              onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
+              onClick={handleCloseSidebar}
               className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
               <MdOutlineCancel/>
             </button>
@@ -42,7 +49,7 @@ const Sidebar = () => {
                 <NavLink
                   to={`/${Link.name}`}
                   key={Link.name}
-                  onClick={() => {}}
+                  onClick={handleCloseSidebar}
                   className={({ isActive }) => isActive ? activeLink : normalLink}
                 >
                   {Link.icon}
